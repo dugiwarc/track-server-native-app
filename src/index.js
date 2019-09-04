@@ -1,14 +1,20 @@
 require("./models/User");
+require("./models/Track");
+
 const express = require("express");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
+const trackRoutes = require("./routes/trackRoutes");
+const requireAuth = require("./middlewares/requireAuth");
 
 const app = express();
 app.use(express.json({ extended: false }));
 app.use(authRoutes);
+app.use(trackRoutes);
 
 const mongoURI =
-	"mongodb+srv://dugiwarc:069249335@cluster0-brxmm.mongodb.net/test?retryWrites=true&w=majority";
+	// "mongodb+srv://dugiwarc:069249335@cluster0-brxmm.mongodb.net/test?retryWrites=true&w=majority";
+	"mongodb://localhost:27017/tusk_world";
 
 mongoose.connect(mongoURI, {
 	useNewUrlParser: true,
@@ -22,8 +28,8 @@ mongoose.connection.on("error", error => {
 	console.log("Error connecting to mongo", error);
 });
 
-app.get("/", (req, res) => {
-	res.send("Hi there!");
+app.get("/", requireAuth, (req, res) => {
+	res.send(`Your email: ${req.user.email}`);
 });
 
 app.listen(3000, () => {
