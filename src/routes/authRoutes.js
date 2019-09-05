@@ -19,8 +19,7 @@ router.post("/signup", async (req, res) => {
 		console.log(user);
 		await user.save(function(err) {
 			if (err) {
-				console.log("User hasn't been saved because", err.message);
-				return;
+				return res.status(422).send(err.message);
 			}
 			const token = jwt.sign({ userId: user._id }, "SECRET_KEY");
 			res.send(token);
