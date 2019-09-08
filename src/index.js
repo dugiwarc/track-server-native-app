@@ -13,7 +13,7 @@ app.use(authRoutes);
 app.use(trackRoutes);
 
 const mongoURI =
-	// "mongodb+srv://dugiwarc:069249335@cluster0-brxmm.mongodb.net/test?retryWrites=true&w=majority";
+	// "mongodb+srv://dugiwarc:password@cluster0-brxmm.mongodb.net/test?retryWrites=true&w=majority";
 	"mongodb://localhost:27017/tusk_world";
 
 mongoose.connect(mongoURI, {
